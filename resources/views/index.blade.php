@@ -9,6 +9,9 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 </head>
 <body class="bg-dark">
     <div class="container mt-3">
@@ -108,7 +111,41 @@
         </form>
     </div>
 
+    <script type="module">
+        $(document).ready(function(){
+            $('.cep').mask("99.999-999");
+            $('.salario').mask("#.##0,00", {reverse: true});
+        });
+    </script>
+
     <script>
+        /* document.addEventListener('DOMContentLoaded', function() {
+            const cepInput = document.getElementById('cep_cadastrar');
+            const mask = new Inputmask("99999-999");
+            mask.mask(cepInput);
+        })
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const cepInput = document.getElementById('cep_atualizar');
+            const mask = new Inputmask("99999-999");
+            mask.mask(cepInput);
+        })
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const salarioInput = document.getElementById('salario_cadastrar');
+            const mask = new Inputmask('decimal', {
+                'alias': 'numeric',
+                'groupSeparator': ',',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': '.',
+                'digitsOptional': false,
+                'alowMinus': false,
+                'placeholder': ''
+            });
+            mask.mask(salarioInput);
+        }) */
+
         function excluir(id) {
             let id_dado = id;
 

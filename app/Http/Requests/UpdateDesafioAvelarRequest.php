@@ -32,7 +32,7 @@ class UpdateDesafioAvelarRequest extends FormRequest
             'bairro' => 'required|max:100',
             'ensino_medio' => 'nullable|in:on',
             'sexo' => ['required', Rule::in(['Masculino','Feminino','Outro'])],
-            'salario' => 'required|decimal:2|min:0|max:999999999999.99',
+            'salario' => 'required|min:0|max:999999999999.99',
             'anexo' => 'nullable|file|max:10240|mimes:pdf,jpg,pdf',
         ];
     }

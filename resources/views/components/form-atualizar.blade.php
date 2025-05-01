@@ -21,8 +21,8 @@
         @enderror
     </div>
     <div class="mb-3">
-        <label for="cep">CEP <span class="text-danger">*</span></label>
-        <input required type="text" name="cep" id="cep" class="form-control cep" maxlength="13" value="{{ $dado->cep }}">
+        <label for="cep_atualizar">CEP <span class="text-danger">*</span></label>
+        <input required type="text" name="cep" id="cep_atualizar" class="form-control cep" maxlength="13" value="{{ $dado->cep }}">
         @error('cep')
             <p class="text-danger">{{ $message }}</p>
         @enderror
@@ -81,7 +81,7 @@
         <label for="salario">Salário <span class="text-danger">*</span></label>
         <div class="input-group">
             <span class="input-group-text">R$</span>
-            <input required type="text" name="salario" id="salario" class="form-control" value="{{ $dado->salario }}">
+            <input required type="text" name="salario" id="salario" class="form-control salario" value="{{ $dado->salario }}">
         </div>
         @error('salario')
             <p class="text-danger">{{ $message }}</p>

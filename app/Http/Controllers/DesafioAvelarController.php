@@ -27,7 +27,7 @@ class DesafioAvelarController extends Controller
             $ensino_medio = true;
         }
 
-        $salario_formatado = number_format($request->salario, 2, '.', '');
+        $salario_formatado = floatval(str_replace(',', '.', str_replace('.', '', $request->salario)));
 
         $caminho_arquivo = $request->file('anexo')->store('anexos');
 
@@ -60,7 +60,7 @@ class DesafioAvelarController extends Controller
             $ensino_medio = true;
         }
 
-        $salario_formatado = number_format($request->salario, 2, '.', '');
+        $salario_formatado = floatval(str_replace(',', '.', str_replace('.', '', $request->salario)));
 
         /* if ($request->anexo != null) {
             $caminho_arquivo = $request->file('anexo')->store('anexos');
