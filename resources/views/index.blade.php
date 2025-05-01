@@ -132,6 +132,8 @@
         </form>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script type="module">
         $(document).ready(function(){
             $('.cep').mask("99.999-999");
@@ -156,5 +158,22 @@
             });
         }
     </script>
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: "success",
+                text: "{{ session('success') }}"
+            });
+        </script>
+    @elseif (session('error'))
+        <script>
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "{{ session('error') }}"
+            })
+        </script>
+    @endif
 </body>
 </html>

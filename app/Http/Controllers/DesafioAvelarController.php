@@ -40,13 +40,13 @@ class DesafioAvelarController extends Controller
 
             DB::commit();
 
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Registro criado!');
         } catch (\Throwable $e) {
             DB::rollBack();
 
             Log::warning('Não foi possível salvar o novo registro.', ['error' => $e->getMessage()]);
 
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Infelizmente algo deu errado, por favor entre em contato com o nosso suporte.');
         }
     }
 
@@ -77,13 +77,13 @@ class DesafioAvelarController extends Controller
 
             DB::commit();
 
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Registro atualizado!');
         } catch (\Throwable $e) {
             DB::rollback();
 
             Log::warning('Não foi possível atualizar o registro.', ['error' => $e->getMessage()]);
 
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Infelizmente algo deu errado, por favor entre em contato com o nosso suporte.');
         }
     }
 
@@ -96,11 +96,11 @@ class DesafioAvelarController extends Controller
 
             DB::delete('delete from dados where id = ?', [$request->id]);
 
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Registro excluído!');
         } catch (\Throwable $e) {
             Log::warning('Não foi possível excluir o registro.', ['error' => $e->getMessage()]);
 
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Infelizmente algo deu errado, por favor entre em contato com o nosso suporte.');
         }
     }
 
