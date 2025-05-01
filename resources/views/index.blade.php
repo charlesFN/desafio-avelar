@@ -40,22 +40,43 @@
                         <td>{{ $dado->idade }} anos</td>
                         <td>{{ $dado->sexo }}</td>
                         <td>R$ {{ number_format($dado->salario, 2, ',', '.') }}</td>
-                        <td></td>
+                        <td>
+                            @if(substr($dado->anexo, -4) == '.pdf')
+                                <a href="{{ route('desafio.avelar.pdf', ['id' => $dado->id]) }}" class="btn btn-sm btn-outline-danger" target="_blank"><i class="fas fa-file-pdf"></i></a>
+                            @else
+                                <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#visualizar-anexo-{{ $dado->id }}"><i class="fas fa-image"></i></button>
+                            @endif
+                        </td>
                         <td>
                             <div class="d-flex justify-content-between">
-                                <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#visualizar-{{ $dado->id }}"><i class="fas fa-eye"></i></button>
-                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#atualizar-{{ $dado->id }}"><i class="fas fa-edit"></i></button>
-                                <button type="button" class="btn btn-sm btn-danger" onclick="excluir({{ $dado->id }})"><i class="fas fa-trash"></i></button>
+                                <button type="button" class="btn btn-sm btn-outline-info" data-bs-toggle="modal" data-bs-target="#visualizar-{{ $dado->id }}"><i class="fas fa-eye"></i></button>
+                                <button type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#atualizar-{{ $dado->id }}"><i class="fas fa-edit"></i></button>
+                                <button type="button" class="btn btn-sm btn-outline-danger" onclick="excluir({{ $dado->id }})"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
+
+                    {{-- Modal de Visualização de Anexo (.jpg, .png) --}}
+                    <div class="modal fade" id="visualizar-anexo-{{ $dado->id }}">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Anexo - {{ $dado->nome }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <img src="{{ url($dado->anexo) }}" alt="" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     {{-- Modal de Visualização de Dados --}}
                     <div class="modal fade" id="visualizar-{{ $dado->id }}">
                         <div class="modal-dialog modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h3 class="modal-title">{{ $dado->nome }}</h3>
+                                    <h5 class="modal-title">{{ $dado->nome }}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                                 </div>
                                 <div class="modal-body">
@@ -70,7 +91,7 @@
                         <div class="modal-dialog modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h3 class="modal-title">Atualizar Dados</h3>
+                                    <h5 class="modal-title">Atualizar Dados</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                                 </div>
                                 <div class="modal-body">
@@ -92,7 +113,7 @@
             <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title">Cadastrar</h3>
+                        <h5 class="modal-title">Cadastrar</h5>
                         <button class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
                     <div class="modal-body">

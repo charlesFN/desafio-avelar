@@ -30,14 +30,15 @@ class DesafioAvelarController extends Controller
 
         $salario_formatado = floatval(str_replace(',', '.', str_replace('.', '', $request->salario)));
 
-        $caminho_arquivo = $request->file('anexo')->store('anexos');
+        $anexo = $request->anexo->getClientOriginalname();
+        $request->file('anexo')->storeAs('anexos', $anexo, 'public');
 
         try {
             DB::beginTransaction();
                 DB::insert(
                     'insert into dados (nome, idade, cep, cidade, estado, rua, bairro, ensino_medio, sexo, salario, anexo)
                             values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                            [$request->nome, $request->idade, $request->cep, $request->cidade, $request->estado, $request->rua, $request->bairro, $ensino_medio, $request->sexo, $salario_formatado, $caminho_arquivo]);
+                            [$request->nome, $request->idade, $request->cep, $request->cidade, $request->estado, $request->rua, $request->bairro, $ensino_medio, $request->sexo, $salario_formatado, 'storage/anexos/'.$anexo]);
 
             DB::commit();
 
@@ -99,5 +100,12 @@ class DesafioAvelarController extends Controller
 
             return redirect()->back();
         }
+    }
+
+    public function pdf($id)
+    {
+        $anexo = DB::select('select anexo from dados where id = ?', [$id]);
+
+        return response()->file($anexo[0]->anexo);
     }
 }
