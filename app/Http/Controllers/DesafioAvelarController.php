@@ -56,22 +56,26 @@ class DesafioAvelarController extends Controller
     {
         $request->validated();
 
-        if ($request->ensino_medio == null) {
-            $ensino_medio = false;
-        } else {
-            $ensino_medio = true;
-        }
-
-        $salario_formatado = floatval(str_replace(',', '.', str_replace('.', '', $request->salario)));
-
-        /* if ($request->anexo != null) {
-            $caminho_arquivo = $request->file('anexo')->store('anexos');
-        } */
-
         try {
+            if ($request->ensino_medio == null) {
+                $ensino_medio = false;
+            } else {
+                $ensino_medio = true;
+            }
+
+            $salario_formatado = floatval(str_replace(',', '.', str_replace('.', '', $request->salario)));
+
+            if ($request->anexo != null) {
+                $anexo_salvo = DB::select('select anexo from dados where id = ?', [$request->id]);
+                Storage::delete([$anexo_salvo[0]->anexo]);
+
+                $novo_anexo = $request->anexo->getClientOriginalname();
+                $request->file('anexo')->storeAs('anexos', $novo_anexo, 'public');
+            }
+
             DB::beginTransaction();
-                DB::update('update dados set nome = ?, idade = ?, cep = ?, cidade = ?, estado = ?, rua = ?, bairro = ?, ensino_medio = ?, sexo = ?, salario = ? where id = ?',
-                    [$request->nome, $request->idade, $request->cep, $request->cidade, $request->estado, $request->rua, $request->bairro, $ensino_medio, $request->sexo, $salario_formatado, $request->id]);
+                DB::update('update dados set nome = ?, idade = ?, cep = ?, cidade = ?, estado = ?, rua = ?, bairro = ?, ensino_medio = ?, sexo = ?, salario = ?, anexo = ? where id = ?',
+                    [$request->nome, $request->idade, $request->cep, $request->cidade, $request->estado, $request->rua, $request->bairro, $ensino_medio, $request->sexo, $salario_formatado, 'storage/anexos/'.$novo_anexo, $request->id]);
 
             DB::commit();
 

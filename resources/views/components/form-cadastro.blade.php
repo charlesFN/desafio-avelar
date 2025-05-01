@@ -93,5 +93,5 @@
             <p class="text-danger">{{ $message }}</p>
         @enderror
     </div>
-    <button class="btn btn-success">Cadastrar</button>
+    <button class="btn btn-primary w-100">Cadastrar</button>
 </form>
