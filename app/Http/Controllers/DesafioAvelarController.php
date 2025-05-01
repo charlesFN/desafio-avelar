@@ -20,8 +20,6 @@ class DesafioAvelarController extends Controller
 
     public function store(StoreDesafioAvelarRequest $request)
     {
-        $request->validated();
-
         if ($request->ensino_medio == null) {
             $ensino_medio = false;
         } else {
