@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
-<body style="background-color: #323539">
+<body class="bg-dark">
     <div class="container mt-3">
         <div class="card text-bg-dark">
             <div class="card-header d-flex justify-content-between">
@@ -19,7 +19,7 @@
             </div>
         </div>
 
-        <table class="table table-dark table-striped table-hover mt-3" style="border-color: #6E12F5">
+        <table class="table table-dark table-striped table-hover mt-3">
             <thead>
                 <th>#</th>
                 <th>Nome</th>
@@ -34,18 +34,33 @@
                     <tr>
                         <td>{{ $dado->id }}</td>
                         <td>{{ $dado->nome }}</td>
-                        <td>{{ $dado->idade }}</td>
+                        <td>{{ $dado->idade }} anos</td>
                         <td>{{ $dado->sexo }}</td>
-                        <td>R$ {{ number_format($dado->salario, 2, ',', '') }}</td>
+                        <td>R$ {{ number_format($dado->salario, 2, ',', '.') }}</td>
                         <td></td>
                         <td>
                             <div class="d-flex justify-content-between">
-                                <button type="button" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></button>
+                                <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#visualizar"><i class="fas fa-eye"></i></button>
                                 <button type="button" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
                                 <button type="button" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
+
+                    {{-- Modal de Visualização de Dados --}}
+                    <div class="modal fade" id="visualizar">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">{{ $dado->nome }}</h3>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    @include('components.visualizar-dados')
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @empty
                     <tr>
                         <td>Nenhum registro encontrado.</td>
@@ -56,14 +71,19 @@
 
         {{-- Modal de Cadasto --}}
         <div class="modal fade" id="cadastro" data-bs-backdrop="static">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h3 class="modal-title">Cadastrar</h3>
                         <button class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
                     <div class="modal-body">
-                        @include('components.form-cadastro')
+                        <form action="{{ route('desafio.avelar.store') }}" method="post" enctype="multipart/form-data">
+                            @csrf
+
+                            @include('components.form-cadastro-edicao')
+                            <button class="btn btn-success">Cadastrar</button>
+                        </form>
                     </div>
                 </div>
             </div>
