@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreDesafioAvelarRequest;
-use App\Http\Requests\UpdateDesafioAvelarRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\StoreDesafioAvelarRequest;
+use App\Http\Requests\UpdateDesafioAvelarRequest;
 
 class DesafioAvelarController extends Controller
 {
@@ -74,11 +75,22 @@ class DesafioAvelarController extends Controller
 
             return redirect()->back();
         } catch (\Throwable $e) {
-            dd('erro');
-
             DB::rollback();
 
             Log::warning('Não foi possível atualizar o registro.', ['error' => $e->getMessage()]);
+
+            return redirect()->back();
+        }
+    }
+
+    public function destroy(Request $request)
+    {
+        try {
+            DB::delete('delete from dados where id = ?', [$request->id]);
+
+            return redirect()->back();
+        } catch (\Throwable $e) {
+            Log::warning('Não foi possível excluir o registro.', ['error' => $e->getMessage()]);
 
             return redirect()->back();
         }

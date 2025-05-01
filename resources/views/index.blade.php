@@ -42,7 +42,7 @@
                             <div class="d-flex justify-content-between">
                                 <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#visualizar-{{ $dado->id }}"><i class="fas fa-eye"></i></button>
                                 <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#atualizar-{{ $dado->id }}"><i class="fas fa-edit"></i></button>
-                                <button type="button" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="excluir({{ $dado->id }})"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
@@ -98,6 +98,32 @@
                 </div>
             </div>
         </div>
+
+        {{-- Formulário de Exclusão --}}
+        <form action="{{ route('desafio.avelar.delete') }}" method="post" id="form_excluir">
+            @csrf
+            @method('DELETE')
+
+            <input type="hidden" name="id" id="id_excluir" value="">
+        </form>
     </div>
+
+    <script>
+        function excluir(id) {
+            let id_dado = id;
+
+            Swal.fire({
+                title: "Deseja mesmo excluir este registro?",
+                showCancelButton: true,
+                confirmButtonText: "Sim, continuar",
+                cancelButtonText: "Não, cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('id_excluir').value = id_dado;
+                    document.getElementById('form_excluir').submit();
+                }
+            });
+        }
+    </script>
 </body>
 </html>
