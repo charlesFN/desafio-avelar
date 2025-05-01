@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreDesafioAvelarRequest extends FormRequest
+class UpdateDesafioAvelarRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,7 +33,7 @@ class StoreDesafioAvelarRequest extends FormRequest
             'ensino_medio' => 'nullable|in:on',
             'sexo' => ['required', Rule::in(['Masculino','Feminino','Outro'])],
             'salario' => 'required|decimal:2|min:0|max:999999999999.99',
-            'anexo' => 'required|file|max:10240|mimes:pdf,jpg,pdf',
+            'anexo' => 'nullable|file|max:10240|mimes:pdf,jpg,pdf',
         ];
     }
 }

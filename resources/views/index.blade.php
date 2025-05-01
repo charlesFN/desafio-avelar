@@ -40,15 +40,15 @@
                         <td></td>
                         <td>
                             <div class="d-flex justify-content-between">
-                                <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#visualizar"><i class="fas fa-eye"></i></button>
-                                <button type="button" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></button>
+                                <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#visualizar-{{ $dado->id }}"><i class="fas fa-eye"></i></button>
+                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#atualizar-{{ $dado->id }}"><i class="fas fa-edit"></i></button>
                                 <button type="button" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
 
                     {{-- Modal de Visualização de Dados --}}
-                    <div class="modal fade" id="visualizar">
+                    <div class="modal fade" id="visualizar-{{ $dado->id }}">
                         <div class="modal-dialog modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -57,6 +57,21 @@
                                 </div>
                                 <div class="modal-body">
                                     @include('components.visualizar-dados')
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Modal de Atualização de dados --}}
+                    <div class="modal fade" id="atualizar-{{ $dado->id }}">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">Atualizar Dados</h3>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                </div>
+                                <div class="modal-body">
+                                    @include('components.form-atualizar')
                                 </div>
                             </div>
                         </div>
@@ -78,12 +93,7 @@
                         <button class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('desafio.avelar.store') }}" method="post" enctype="multipart/form-data">
-                            @csrf
-
-                            @include('components.form-cadastro-edicao')
-                            <button class="btn btn-success">Cadastrar</button>
-                        </form>
+                        @include('components.form-cadastro')
                     </div>
                 </div>
             </div>
