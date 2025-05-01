@@ -81,7 +81,7 @@
                     </div>
                 @empty
                     <tr>
-                        <td>Nenhum registro encontrado.</td>
+                        <td colspan="7">Nenhum registro encontrado.</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -119,33 +119,6 @@
     </script>
 
     <script>
-        /* document.addEventListener('DOMContentLoaded', function() {
-            const cepInput = document.getElementById('cep_cadastrar');
-            const mask = new Inputmask("99999-999");
-            mask.mask(cepInput);
-        })
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const cepInput = document.getElementById('cep_atualizar');
-            const mask = new Inputmask("99999-999");
-            mask.mask(cepInput);
-        })
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const salarioInput = document.getElementById('salario_cadastrar');
-            const mask = new Inputmask('decimal', {
-                'alias': 'numeric',
-                'groupSeparator': ',',
-                'autoGroup': true,
-                'digits': 2,
-                'radixPoint': '.',
-                'digitsOptional': false,
-                'alowMinus': false,
-                'placeholder': ''
-            });
-            mask.mask(salarioInput);
-        }) */
-
         function excluir(id) {
             let id_dado = id;
 

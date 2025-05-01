@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreDesafioAvelarRequest;
 use App\Http\Requests\UpdateDesafioAvelarRequest;
 
@@ -86,6 +87,10 @@ class DesafioAvelarController extends Controller
     public function destroy(Request $request)
     {
         try {
+            $anexo = DB::select('select anexo from dados where id = ?', [$request->id]);
+
+            Storage::delete([$anexo[0]->anexo]);
+
             DB::delete('delete from dados where id = ?', [$request->id]);
 
             return redirect()->back();
