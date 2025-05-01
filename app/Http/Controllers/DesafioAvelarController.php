@@ -10,7 +10,9 @@ class DesafioAvelarController extends Controller
 {
     public function index()
     {
-        return view('index');
+        $dados = DB::select('select * from dados order by id desc');
+
+        return view('index', compact('dados'));
     }
 
     public function store(StoreDesafioAvelarRequest $request)
@@ -23,23 +25,17 @@ class DesafioAvelarController extends Controller
             $ensino_medio = true;
         }
 
+        $salario_formatado = number_format($request->salario, 2, '.', '');
+
         $caminho_arquivo = $request->file('anexo')->store('anexos');
 
         try {
             DB::beginTransaction();
-                DB::table('dados')->insert([
-                    'nome' => $request->nome,
-                    'idade' => $request->idade,
-                    'cep' => $request->cep,
-                    'cidade' => $request->cidade,
-                    'estado' => $request->estado,
-                    'rua' => $request->rua,
-                    'bairro' => $request->bairro,
-                    'ensino_medio' => $ensino_medio,
-                    'sexo' => $request->sexo,
-                    'salario' => number_format($request->salario, 2, '.', ''),
-                    'anexo' => $caminho_arquivo
-                ]);
+                DB::insert(
+                    'insert into dados (nome, idade, cep, cidade, estado, rua, bairro, ensino_medio, sexo, salario, anexo)
+                            values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                            [$request->nome, $request->idade, $request->cep, $request->cidade, $request->estado, $request->rua, $request->bairro, $ensino_medio, $request->sexo, $salario_formatado, $caminho_arquivo]);
+
             DB::commit();
 
             return redirect()->back();
